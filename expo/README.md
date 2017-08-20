@@ -8,3 +8,6 @@ Definition types for [expo](https://expo.io/)
 
 ## Roadmap
 - Make support for latest expo version [20.0.0](https://blog.expo.io/expo-sdk-v20-0-0-is-now-available-79f84232a9d1)
+
+## Useful links
+- [Expo with TypeScript example](https://github.com/dalcib/expo-ts-example)
