@@ -57,6 +57,99 @@ declare module 'expo' {
         style: ViewStyle;
     }
 
+    /**
+     * Magnetometer
+     */
+    export class Magnetometer {
+
+        public static addListener(listener : (object : { x: number, y: number, z: number }) => void) : EventSubscription
+
+        public static removeAllListeners() : void
+
+        public static setUpdateInterval(intervalMs : number) : void
+
+    }
+
+    /**
+     * Cemera
+     */
+    export namespace Camera {
+
+        export namespace Constants {
+
+            export enum Type {
+                front = "front",
+                back  = "back"
+            }
+
+            export enum FlashMode {
+                on = "on",
+                off = "off",
+                auto = "auto",
+                torch = "torch"
+            }
+
+            export enum WhiteBalance {
+                auto = "auto",
+                sunny = "sunny",
+                cloudy = "cloudy",
+                shadow = "shadow",
+                fluorescent= "fluorescent",
+                incandescent = "incandescent"
+            }
+
+        }
+
+    }
+
+    interface CameraProps {
+        style ?: ViewStyle|Array<ViewStyle>,
+        type  ?: Camera.Constants.Type,
+        flashMode ?: Camera.Constants.FlashMode
+        zoom ?: number,
+        whiteBalance ?: Camera.Constants.WhiteBalance,
+        focusDepth ?: number,
+        ratio ?: string,
+        onCameraReady ?: () => void
+    }
+
+    export class Camera extends React.Component<CameraProps, any> {
+
+        public takePictureAsync() : Promise<string>;
+
+        public getSupportedRatiosAsync() : Promise<Array<string>>
+
+    }
+
+    /**
+     * SecureStore
+     * https://docs.expo.io/versions/latest/sdk/securestore.html
+     */
+    export enum keychainAccessible {
+        AFTER_FIRST_UNLOCK,
+        AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY,
+        ALWAYS,
+        ALWAYS_THIS_DEVICE_ONLY,
+        WHEN_PASSCODE_SET_THIS_DEVICE_ONLY,
+        WHEN_UNLOCKED,
+        WHEN_UNLOCKED_THIS_DEVICE_ONLY
+    }
+
+
+    interface SecureStoreOptions {
+        keychainService ?: string,
+        keychainAccessible ?: string,
+    }
+
+    export class SecureStore {
+
+        public static setValueWithKeyAsync(key : string, options ?: SecureStoreOptions ) : Promise<any>
+
+        public static getValueWithKeyAsync(key : string, options ?: SecureStoreOptions) : Promise<string>
+
+        public static deleteValueWithKeyAsync(key : string, options ?: SecureStoreOptions) : Promise<any>
+
+    }
 
     /**
      * AppLoading
@@ -819,7 +912,7 @@ declare module 'expo' {
             | 'camera'
             | 'contacts'
             | 'audioRecording'
-            ;
+            |  string;
         export type PermissionStatus = 'undetermined' | 'granted' | 'denied';
         export type PermissionExpires = 'never';
         export interface PermissionDetailsLocationIOS {
@@ -835,8 +928,8 @@ declare module 'expo' {
             android?: PermissionDetailsLocationAndroid;
         }
 
-        export function getAsync(type: PermissionType): Promise<PermissionResponse>;
-        export function askAsync(type: PermissionType): Promise<PermissionResponse>;
+        export function getAsync(type: string): Promise<PermissionResponse>;
+        export function askAsync(type: string): Promise<PermissionResponse>;
 
         export const CAMERA: string;
         export const AUDIO_RECORDING: string;
