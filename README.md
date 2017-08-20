@@ -1,3 +1,3 @@
 # DefinitionTypes
 
-My own or edited definition types for various libraries.
+Own or edited definition types for various libraries.
